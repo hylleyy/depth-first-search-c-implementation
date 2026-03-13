@@ -15,7 +15,8 @@
 int main(int argc, char *argv[])
 {
 	#ifdef DEBUG
-	printf("program start -------------------------------------------------------------\n");
+	SetConsoleOutputCP(CP_UTF8);
+	printf("program started -----------------------------------------------------------\n");
 	clock_t start_time = clock();
 	#endif
 
@@ -34,7 +35,7 @@ int main(int argc, char *argv[])
 	for(size_t i = 0; i < list->length; i++)
 	{
 		int value = *(int*)llget(list, i);
-		printf("%i", value);
+		printf("%i\n", value);
 	}
 
 	llfree(list);

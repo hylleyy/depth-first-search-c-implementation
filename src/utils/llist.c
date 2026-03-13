@@ -2,6 +2,10 @@
 #include <string.h>
 #include "llist.h"
 
+#ifdef DEBUG
+#include <stdio.h>
+#endif
+
 linked_list *new_linked_list()
 {
 	linked_list* new_list = malloc(sizeof(linked_list));
@@ -23,7 +27,13 @@ int llfree(linked_list *list)
 	while (node_to_free != NULL)
 	{
 		llnode *next_node_to_free = node_to_free->next;
+		#ifdef DEBUG
+		printf("linked list internal memory freed at: %p (node→value, %zu bytes)\n", node_to_free->value, sizeof(node_to_free->value));
+		#endif
 		free(node_to_free->value);
+		#ifdef DEBUG
+		printf("linked list internal memory freed at: %p (node, %zu bytes)\n", node_to_free, sizeof(llnode));
+		#endif
 		free(node_to_free);
 
 		node_to_free = next_node_to_free;
