@@ -57,15 +57,30 @@ int lladd(linked_list *list, int index, void *element, size_t node_value_size_t)
 	if(index > 0 && index > list_length) return -1;
 	if(index < 0 && index < -list_length) return -1;
 	if(index < 0) index = list_length + index; // python-style reverse indexing: because counting backwards is a basic human right
-
+	
+	#ifdef DEBUG
+	printf("trying to allocate %zu bytes for linked list internal node value copy\n", node_value_size_t);
+	#endif
 	void *element_copy = malloc(node_value_size_t);
-	if (element_copy == NULL) return -1;
+	if (element_copy == NULL)
+	{
+		#ifdef DEBUG
+		printf("memory allocation failed, returning errror code\n", node_value_size_t);
+		#endif
+		return -1;
+	}
 	memcpy(element_copy, element, node_value_size_t);
+	#ifdef DEBUG
+	printf("successfully allocated and copied %zu bytes from %p\n", node_value_size_t, element_copy);
+	#endif
 
 	llnode *new_node = llcreate_node(element_copy);
 	if (new_node == NULL)
 	{
-		free(element_copy); // node creation failed. aborting mission and burning the evidence (element_copy)
+		free(element_copy);
+		#ifdef DEBUG
+		printf("linked list internal node creation failure. aborting mission and burning the evidence (freeing element_copy)");
+		#endif
 		return -1;
 	}
 

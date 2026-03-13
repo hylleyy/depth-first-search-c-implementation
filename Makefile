@@ -23,5 +23,5 @@ clean:
 	del /Q src\*.o src\utils\*.o $(TARGET).exe
 
 # debug mode
-debug: CFLAGS += -DDEBUG -D__USE_MINGW_ANSI_STDIO=1 -g
+debug: CFLAGS += -DDEBUG -D__USE_MINGW_ANSI_STDIO=1 -g # DEBUG flag activates internal program output; __USE_MINGW_ANSI_STDIO allows using the %zu format specifier in printf (required for printing unsigned integers)
 debug: clean $(TARGET)
