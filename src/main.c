@@ -8,7 +8,7 @@
 #include "llist.h"
 
 #ifdef DEBUG
-#include "time.h"
+#include <time.h>
 #endif
 
 

@@ -68,7 +68,7 @@ int lladd(linked_list *list, int index, void *element, size_t node_value_size_t)
 		return 0;
 	}
 
-	if(index == 0) // this is a coup d'état
+	if(index == 0) // coup d'état
 	{
 		new_node->next = list->head;
 		list->head = new_node;
@@ -85,7 +85,7 @@ int lladd(linked_list *list, int index, void *element, size_t node_value_size_t)
 		return 0;
 	}
 
-	// the tricky part: scrubbing in for open-heart pointer surgery
+	// scrubbing in for open-heart pointer surgery
 
 	llnode *previous_node = llget_node(list, index-1);
 	if(previous_node == NULL)
@@ -121,6 +121,64 @@ llnode *llcreate_node(void *value_pointer)
 	new_node->next = NULL;
 
 	return new_node;
+}
+
+int llpop(linked_list *list, int index)
+{
+	if(list == NULL || element == NULL) return -1;
+	int list_length = (int)list->length;
+	if(index > 0 && index > list_length) return -1;
+	if(index < 0 && index < -list_length) return -1;
+	if(index < 0) index = list_length + index;
+
+	if(list->length == 1 && index == 0)
+	{
+		free(list->head->value);
+		free(list->head);
+		list->head = NULL;
+		list->tail = NULL;
+		list->length--;
+
+		return 0;
+	}
+
+	if(index == 0)
+	{
+		llnode *old_head = list->head;
+		list->head = list->head->next;
+		free(old_head->value);
+		free(old_head);
+		list->length--;
+
+		return 0;
+	}
+
+	if(index == (list->length - 1))
+	{
+		llnode *old_tail = list->tail;
+		llnode *old_tail_previous = llget_node(list, index - 2);
+		if(old_tail_previous == NULL) return -1;
+
+		list->tail = old_tail_previous;
+		list->tail->next = NULL;
+
+		free(old_tail->value);
+		free(old_tail);
+		list->length--;
+
+		return 0;
+	}
+
+	llnode *previous_node = llget_node(list, index - 1); if(previous_node == NULL) return -1;
+	llnode *node_to_pop = previous_node->next;
+	llnode *post_node = node_to_pop->next;
+
+	previous_node->next = post_node;
+	free(node_to_pop->value);
+	free(node_to_pop);
+	list->length--;
+
+	return 0;
 }
 
 void *llget(const linked_list *list, int index)
