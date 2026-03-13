@@ -7,8 +7,18 @@
 #include "graph.h"
 #include "llist.h"
 
+#ifdef DEBUG
+#include "time.h"
+#endif
+
+
 int main(int argc, char *argv[])
 {
+	#ifdef DEBUG
+	printf("program start -------------------------------------------------------------\n");
+	clock_t start_time = clock();
+	#endif
+
 	linked_list *list = new_linked_list();
 	int numero = 1;
 	llappend(list, &numero, sizeof(int));
@@ -27,6 +37,8 @@ int main(int argc, char *argv[])
 		printf("%i", value);
 	}
 
+	llfree(list);
+
 	// SetConsoleOutputCP(CP_UTF8);
 	// printf("\x1b[36m" "***************************************************\n");
 	// printf("* *\n");
@@ -44,6 +56,12 @@ int main(int argc, char *argv[])
 	// regmatch_t pmatch[3];
 	// if (regcomp(&regex, "^([^,]+),([^,]+)$", REG_EXTENDED) != 0) return 1;
 	
+
+	#ifdef DEBUG
+	clock_t end_time = clock();
+	double cpu_time_used = ((double) (end_time - start_time)) / CLOCKS_PER_SEC;
+	printf("\nprogram ended with execution time: %f seconds -----------------------", cpu_time_used);
+	#endif
 
 	return 0;
 }

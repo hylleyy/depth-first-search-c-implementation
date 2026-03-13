@@ -21,3 +21,7 @@ $(TARGET): $(OBJS)
 
 clean:
 	del /Q src\*.o src\utils\*.o $(TARGET).exe
+
+# debug mode
+debug: CFLAGS += -DDEBUG -g
+debug: clean $(TARGET)
