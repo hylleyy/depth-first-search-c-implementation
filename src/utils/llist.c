@@ -125,7 +125,7 @@ llnode *llcreate_node(void *value_pointer)
 
 int llpop(linked_list *list, int index)
 {
-	if(list == NULL || element == NULL) return -1;
+	if(list == NULL) return -1;
 	int list_length = (int)list->length;
 	if(index > 0 && index > list_length) return -1;
 	if(index < 0 && index < -list_length) return -1;
@@ -156,7 +156,7 @@ int llpop(linked_list *list, int index)
 	if(index == (list->length - 1))
 	{
 		llnode *old_tail = list->tail;
-		llnode *old_tail_previous = llget_node(list, index - 2);
+		llnode *old_tail_previous = llget_node(list, index - 1);
 		if(old_tail_previous == NULL) return -1;
 
 		list->tail = old_tail_previous;
