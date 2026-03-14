@@ -4,7 +4,7 @@
 #include "llist.h"
 #include "dfs.h"
 
-bool is_graph_connected(int edges_array[][2], int rows)
+struct dfs_result is_graph_connected(int edges_array[][2], int rows)
 {
 	int min = edges_array[0][0];
 
@@ -26,10 +26,15 @@ bool is_graph_connected(int edges_array[][2], int rows)
 		if(!contains(unique, edges_array[i][1])) llappend(unique, &edges_array[i][1], sizeof(int));
 	}
 
+	struct dfs_result result;
+	result.path_length = traverse->length;
+	result.size_length = unique->length;
+	result.is_connected = result.path_length == result.size_length;
+
 	llfree(traverse);
 	llfree(unique);
 
-	return traverse->length == unique->length;
+	return result;
 }
 
 void search_from(int value, int edges_array[][2], int edges_array_rows, linked_list *traverse)

@@ -74,13 +74,19 @@ int main(int argc, char *argv[])
 	}
 
 	llfree(vertex_list);
+	
+	// then we join the pieces
 
-	bool connected = is_graph_connected(static_vertex_array, static_vertex_size);
-	if(connected)
+	dfs_result dfs = is_graph_connected(static_vertex_array, static_vertex_size);
+	
+	if(dfs.is_connected)
 	{
-		printf("The graph is connected");
+		printf("O grafo é conectado (%i nós encontrados de %i total).", dfs.path_length, dfs.size_length);
 	}
-	else { printf("The graph is not connected"); }
+	else
+	{
+		printf("O grafo NÃO é conectado (%i nós encontrados de %i total).", dfs.path_length, dfs.size_length);
+	}
 
 
 	#ifdef DEBUG
