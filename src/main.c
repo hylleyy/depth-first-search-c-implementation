@@ -77,17 +77,80 @@ int main(int argc, char *argv[])
 	
 	// then we join the pieces
 
-	dfs_result dfs = is_graph_connected(static_vertex_array, static_vertex_size);
+	dfs_result dfs = depth_first_search(static_vertex_array, static_vertex_size);
 	
 	if(dfs.is_connected)
 	{
-		printf("O grafo é conectado (%i nós encontrados de %i total).", dfs.path_length, dfs.size_length);
+		printf("O grafo é conectado (%i nós encontrados de %i total).\n\n", dfs.traverse->length, dfs.unique->length);
 	}
 	else
 	{
-		printf("O grafo NÃO é conectado (%i nós encontrados de %i total).", dfs.path_length, dfs.size_length);
+		printf("O grafo NÃO é conectado (%i nós encontrados de %i total).\n\n", dfs.traverse->length, dfs.unique->length);
 	}
 
+	llfree(dfs.traverse); // I should't need this anymore
+	
+	// now count vertices
+
+	int static_unique_array_size = dfs.unique->length;
+	int static_unique_array[static_unique_array_size][2];
+	memset(static_unique_array, 0, sizeof(static_unique_array));	
+	current_node = dfs.unique->head;
+	index = 0;
+
+	while(current_node != NULL)
+	{
+		int value = *(int *)(current_node->value);
+		static_unique_array[index][0] = value;
+		index++;
+		current_node = current_node->next;
+	}
+
+	for(int i = 0; i < static_unique_array_size; i++)
+	{
+		for(int j = 0; j < static_vertex_size; j++)
+		{
+			if((static_unique_array[i][0] == static_vertex_array[j][0]) || (static_unique_array[i][0] == static_vertex_array[j][1])) static_unique_array[i][1]++;
+		}
+	}
+
+	int odd_vertices = 0;
+	int even_vertices = 0;
+
+	for(int i = 0; i < static_unique_array_size; i++)
+	{
+		printf("Grau de %i é: %i.\n", static_unique_array[i][0], static_unique_array[i][1]);
+
+		if(static_unique_array[i][1] % 2 == 0)
+		{
+			even_vertices++;
+			continue;
+		}
+
+		odd_vertices++;
+	}
+
+	printf("\nVértices pares: %i.\n", even_vertices);
+	printf("Vértices ímpares: %i.\n", odd_vertices);
+	
+	llfree(dfs.unique);
+
+	switch (odd_vertices)
+	{
+		case 0:
+			printf("O grafo é euleriano (0 vértices de grau ímpar).");
+			break;
+		
+		case 2:
+			printf("O grafo é semi-euleriano (2 vértices de grau ímpar).");
+			break;
+		
+		default:
+			printf("O grafo não possui caminho euleriano (mais de 2 vértices ímpares).");
+			break;
+	}
+
+	printf("\n");
 
 	#ifdef DEBUG
 	clock_t end_time = clock();

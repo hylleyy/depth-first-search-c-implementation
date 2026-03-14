@@ -4,7 +4,7 @@
 #include "llist.h"
 #include "dfs.h"
 
-struct dfs_result is_graph_connected(int edges_array[][2], int rows)
+struct dfs_result depth_first_search(int edges_array[][2], int rows)
 {
 	int min = edges_array[0][0];
 
@@ -27,12 +27,9 @@ struct dfs_result is_graph_connected(int edges_array[][2], int rows)
 	}
 
 	struct dfs_result result;
-	result.path_length = traverse->length;
-	result.size_length = unique->length;
-	result.is_connected = result.path_length == result.size_length;
-
-	llfree(traverse);
-	llfree(unique);
+	result.traverse = traverse;
+	result.unique = unique;
+	result.is_connected = traverse->length == unique->length;
 
 	return result;
 }
