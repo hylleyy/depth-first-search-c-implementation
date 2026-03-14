@@ -1,3 +1,4 @@
+![Graph Terminal showcase](https://i.imgur.com/x7w9ONc.gif)
 🕸️ Edges, Vertices, and Other Traumas (v0.1)
 ---
 > “Trying not to leak memory while searching for a path Euler found in 1736 without using a single byte.” — Me, at 3 AM.
