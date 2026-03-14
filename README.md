@@ -36,12 +36,12 @@ include/           # Header files
 If you have gcc and make installed, it's pure joy:
 ```
 make
-graph
+graph # or the name of your preference inside the makefile
 ```
 Then just type the edges in the `1, 2` format and hit Enter.
 
 ## Academic Sincerity (Post-Mortem)
-If I were to do it all over again, I change would change a couple of things:
+Notes for refactoring: If I were to do it all over again, I change would change a couple of things.
 
 - **Less spaghetti**: The code turned into a pasta dish faster than I planned (I didn't plan).
 - **Clean Code**: I need to re-read the sections on commenting best practices. A lot of what I wrote yesterday already looks like Greek to me today.
