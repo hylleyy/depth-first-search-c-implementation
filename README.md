@@ -36,7 +36,7 @@ include/           # Header files
 If you have gcc and make installed, it's pure joy:
 ```
 make
-./graph # or the name of your preference inside the makefile
+./graph
 ```
 Then just type the edges in the `1, 2` format and hit Enter.
 
