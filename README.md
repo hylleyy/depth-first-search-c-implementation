@@ -23,7 +23,7 @@ Basically, it takes a list of connections (edges) that you input  and resolves t
 
 `main.c`: The terminal interface that uses RegEx (via the SLRE library).
 
-### Estrutura do projeto
+### Project structure
 ```
 src/
  ├── main.c        # Where the chaos begins
