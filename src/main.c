@@ -22,7 +22,13 @@ int main(int argc, char *argv[])
 	clock_t start_time = clock();
 	#endif
 
-	printf("Digite as arestas individualmente, separadas por vírgula. Enter terminar.\n");
+	printf("┌──────────────────────────────────────────────────────────────────────────┐\n");
+    printf("│               ARESTAS, VÉRTICES E OUTROS TRAUMAS (v0.1)                  │\n");
+    printf("│                                                                          │\n");
+    printf("│  \"Tentando não vazar memória enquanto procuro um caminho que o Euler     │\n");
+    printf("│   achou em 1736 sem usar um único byte.\"                                 │\n");
+    printf("└──────────────────────────────────────────────────────────────────────────┘\n\n");
+	printf("Digite as arestas individualmente (ex.: \"1, 2\"). Enter para terminar.\n");
 	
 	bool escape = false;
 
