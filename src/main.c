@@ -2,46 +2,28 @@
 #include <string.h>
 #include <stdbool.h>
 #include <windows.h>
-
-#include "euler.h"
-#include "graph.h"
-#include "llist.h"
-#include "slre.h" // external libray
-
 #ifdef DEBUG
 #include <time.h>
 #endif
 
+#include "slre.h" // external libray
+
+#include "euler.h"
+#include "graph.h"
+#include "llist.h"
+#include "dfs.h"
+
 
 int main(int argc, char *argv[])
 {
-	printf("olaa");
 	SetConsoleOutputCP(CP_UTF8);
 	#ifdef DEBUG
 	printf("program started -----------------------------------------------------------\n");
 	clock_t start_time = clock();
 	#endif
 
-	// int numero = 1;
-	// llappend(list, &numero, sizeof(int));
-	// numero = 1;
-	// llappend(list, &numero, sizeof(int));
-	// numero = 0;
-	// llappend(list, &numero, sizeof(int));
-	// numero = 3;
-	// llappend(list, &numero, sizeof(int));
-	// numero = 7;
-	// llappend(list, &numero, sizeof(int));
-
-	printf("\x1b[36m" "***************************************************\n");
-	printf("* *\n");
-	printf("* \x1b[33m" "Grafo Semieuleriano, Estudante Semiconsumido" "\x1b[36m" "    *\n");
-	printf("* *\n");
-	printf("***************************************************\n" "\x1b[0m");
-	printf("\n");
 	printf("Digite as arestas individualmente, separadas por vírgula. Enter terminar.\n");
 	
-
 	bool escape = false;
 
 	linked_list *vertex_list = new_linked_list();
@@ -74,12 +56,7 @@ int main(int argc, char *argv[])
 		else escape = true;
 	} while (!escape);
 	
-
-	for(size_t i = 0; i < vertex_list->length; i++)
-	{
-		int *edge = (int *)llget(vertex_list, i);
-		printf("%i-%i\n", edge[0], edge[1]);
-	}
+	is_graph_connected(vertex_list);
 
 	llfree(vertex_list);
 
