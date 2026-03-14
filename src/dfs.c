@@ -4,44 +4,56 @@
 #include "llist.h"
 #include "dfs.h"
 
-bool is_graph_connected(linked_list *edges_list)
+bool is_graph_connected(int edges_array[][2], int rows)
 {
-	linked_list *traverse = depht_first_search(edges_list);
+	int min = edges_array[0][0];
+
+	for(int i = 0; i < rows; i++)
+	{
+		if (edges_array[i][0] < min) min = edges_array[i][0];
+		if (edges_array[i][1] < min) min = edges_array[i][1];
+	}
+
+	// depth-first-search
+	linked_list *traverse = new_linked_list();
+	search_from(min, edges_array, rows, traverse);
+
+	// comparting with unique nodes
+	linked_list *unique = new_linked_list();
+	for(int i = 0; i < rows; i++)
+	{
+		if(!contains(unique, edges_array[i][0])) llappend(unique, &edges_array[i][0], sizeof(int));
+		if(!contains(unique, edges_array[i][1])) llappend(unique, &edges_array[i][1], sizeof(int));
+	}
 
 	llfree(traverse);
+	llfree(unique);
 
-	return false;
+	return traverse->length == unique->length;
 }
 
-linked_list *depht_first_search(linked_list *edges_list)
+void search_from(int value, int edges_array[][2], int edges_array_rows, linked_list *traverse)
 {
-	linked_list *traverse = new_linked_list();
+	if(contains(traverse, value)) return;
+	llappend(traverse, &value, sizeof(value));
 
-	int min_node = llget_min_int_in_list(edges_list);
-	printf("menor valor: %i", min_node);
-
-	return traverse;
+	for(int i = 0; i < edges_array_rows; i++)
+	{
+		if(edges_array[i][0] == value) search_from(edges_array[i][1], edges_array, edges_array_rows, traverse);
+		if(edges_array[i][1] == value) search_from(edges_array[i][0], edges_array, edges_array_rows, traverse);
+	}
 }
 
-
-int llget_min_int_in_list(const linked_list *list)
+bool contains(const linked_list *list, int value)
 {
-	if(list == NULL) return -1;
-	if(list->length == 0) return -1;
-	if(list->length == 1) return *(int *)list->head->value;
-
 	llnode* current_node = list->head;
-	int min_value = *(int *)(current_node->value);
 
 	while(current_node != NULL)
 	{
-		int *current_value = (int *)(current_node->value);
-
-		if(current_value[0] < min_value) min_value = current_value[0];
-		if(current_value[1] < min_value) min_value = current_value[1];
-
+		int current_value = *(int *)(current_node->value);
+		if (current_value == value) return true;
 		current_node = current_node->next;
 	}
 
-	return min_value;
+	return false;
 }

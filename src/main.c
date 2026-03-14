@@ -55,10 +55,33 @@ int main(int argc, char *argv[])
 		}
 		else escape = true;
 	} while (!escape);
+
+	// we're converting the linked list to a fixed array to soften our burdens in the future
 	
-	is_graph_connected(vertex_list);
+	int static_vertex_size = vertex_list->length;
+	int static_vertex_array[static_vertex_size][2];	
+	llnode* current_node = vertex_list->head;
+	int index = 0;
+
+	while(current_node != NULL)
+	{
+		int *current_value = (int *)(current_node->value);
+		static_vertex_array[index][0] = current_value[0];
+		static_vertex_array[index][1] = current_value[1];
+	
+		index++;
+		current_node = current_node->next;
+	}
 
 	llfree(vertex_list);
+
+	bool connected = is_graph_connected(static_vertex_array, static_vertex_size);
+	if(connected)
+	{
+		printf("The graph is connected");
+	}
+	else { printf("The graph is not connected"); }
+
 
 	#ifdef DEBUG
 	clock_t end_time = clock();

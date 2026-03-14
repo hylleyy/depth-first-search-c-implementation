@@ -1,5 +1,5 @@
 #pragma once
 
-bool is_graph_connected(linked_list *edges_list);
-linked_list *depht_first_search(linked_list *edges_list);
-int llget_min_int_in_list(const linked_list *list);
+bool is_graph_connected(int edges[][2], int rows);
+void search_from(int value, int edges_array[][2], int edges_array_rows, linked_list *traverse);
+bool contains(const linked_list *list, int value);

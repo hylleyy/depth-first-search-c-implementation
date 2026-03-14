@@ -1,0 +1,2 @@
+Feedback for the future:
+- [ ] Learn functional programming: many functions in the project modified elements out of its scope violating one of the most important functional programming rules and putting the program in risk of undefined behaviour.
